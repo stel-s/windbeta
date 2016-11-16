@@ -1,0 +1,32 @@
+  <firebase-app auth-domain="polymerfire-test.firebaseapp.com"
+  database-url="https://polymerfire-test.firebaseio.com/"
+  api-key="AIzaSyDTP-eiQezleFsV2WddFBAhF_WEzx_8v_g">
+</firebase-app>
+<firebase-auth id="auth" user="{{user}}" provider="google" on-error="handleError">
+</firebase-auth>
+  <firebase-query
+    id="query"
+    app-name="notes"
+    path="/notes/[[uid]]"
+    data="{{data}}">
+</firebase-query>
+
+<template is="dom-repeat" items="{{data}}" as="note">
+  <sticky-note note-data="{{note}}"></sticky-note>
+</template>
+
+<script>
+Polymer({
+  properties: {
+    uid: String,
+    data: {
+      type: Object,
+      observer: 'dataChanged'
+    }
+  },
+
+  dataChanged: function (newData, oldData) {
+    // do something when the query returns values
+  }
+});
+</script>

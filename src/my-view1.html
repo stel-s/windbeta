@@ -1,0 +1,187 @@
+<!--
+@license
+Copyright (c) 2016 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="shared-styles.html">
+<link rel="import" href="../bower_components/polymerfire/polymerfire.html">
+<link rel="import" href="../bower_components/google-chart/google-chart.html">
+<link rel="import" href="../bower_components/paper-datatable/paper-datatable.html">
+<link rel="import" href="../bower_components/paper-listbox/paper-listbox.html">
+<link rel="import" href="../bower_components/paper-material/paper-material.html">
+<link rel="import" href="../bower_components/vaadin-charts/vaadin-charts.html">
+<link rel="import" href="../bower_components/weather-icons/css/weather-icons.css">
+<link rel="import" href="../bower_components/weather-icons/css/weather-icons-wind.css">
+
+<dom-module id="my-view1">
+ 
+  <template>
+     <p>
+     
+
+<vaadin-gauge-chart id="gauge-with-dual-axes">
+    <chart align-ticks="false" plot-background-color="null" plot-background-image="null"
+                 plot-border-width="0" plot-shadow="false"></chart>
+    <title>Speedometer with dual axes</title>
+    <pane start-angle="-150" end-angle="150"></pane>
+    <y-axis min="0" max="200" line-color="#339" tick-color="#339" minor-tick-color="#339"
+                    offset="-25" line-width="2" tick-length="5" minor-tick-length="5" end-on-tick="false">
+        <labels distance="-20" rotation="auto"></labels>
+    </y-axis>
+    <y-axis min="0" max="124" tick-position="outside" line-color="#933" line-width="2"
+                    minor-tick-position="outside" tick-color="#933" minor-tick-color="#933"
+                    tick-length="5" minor-tick-length="5" offset="-20" end-on-tick="false">
+        <labels distance="12" rotation="auto"></labels>
+    </y-axis>
+    <tooltip enabled="false"></tooltip>
+    <plot-options>
+        <gauge>
+            <data-labels
+                    formatter="function () { return this.y + ' km/h<br/>' + Math.round(this.y * 0.621) + ' mph'; }">
+                <background-color>
+                    <linear-gradient x1="0" y1="0" x2="0" y2="1">
+                    </linear-gradient>
+                    <stops>0, #DDD</stops>
+                    <stops>1, #FFF</stops>
+                </background-color>
+            </data-labels>
+        </gauge>
+    </plot-options>
+    <data-series>
+        <name>Speed</name>
+        <data>80</data>
+    </data-series>
+</vaadin-gauge-chart>
+    <firebase-app name="notes" auth-domain="bookit-80365.firebaseapp.com" database-url="https://bookit-80365.firebaseio.com/"
+      api-key="AIzaSyCfBs6XfzW-OTpqOOAgX_ipqRQAoz9Zwzs">
+    </firebase-app>
+    <!--<firebase-query id="query" app-name="notes" path="/posts" data="{{data}}">
+    </firebase-query>-->
+    <firebase-document
+    id="document"
+    app-name = "notes"
+  path="/posts"
+  data="{{data}}" log >
+    </firebase-document>
+
+    <style include="shared-styles">
+      :host {
+        display: block;
+        padding: 10px;
+      }
+    </style>
+<div class="card">
+    <img src="wind.png" style="height:48px;width:auto"/>
+        <img class="center" style="webkit-transform-origin: 50% 50%;
+  -webkit-transform: rotate({{rotate}}deg);position:relative;
+  width: 36px;transform: rotate({{rotate}}deg);
+                transform-origin: 50% 50% 0;" src="//ssl.gstatic.com/m/images/weather/wind_unselected.svg"/>
+        <span style="font-size: 30px;text-align: center" class="pull-right wi wi-beafort-{{beafort}} text-large" ></span>{{sensor.vane}}
+        <br>
+        <strong style="font-size:x-large">6&nbsp;<sup>Km/h</sup></strong>
+
+            <br>min:3
+            <br>max:6
+            <svg
+                    xmlns="http://www.w3.org/2000/svg" height="24"
+                    style="position:absolute;width:20px;fill:cornflowerblue" viewBox="0 0 24 24">
+                <path d="M7 14l5-5 5 5z"/>
+                <path d="M0 0h24v24h-24z" fill="none"/>
+            </svg>
+            <br>
+            Τελευταία Μέτρηση: Tue Nov 15 2016 14:37:56
+
+            <br>
+            Weekly change:4<svg xmlns="http://www.w3.org/2000/svg" height="24" style="position:absolute;width:20px;fill:cornflowerblue" viewBox="0 0 24 24">
+                <path d="M7 14l5-5 5 5z"/>
+                <path d="M0 0h24v24h-24z" fill="none"/>
+            </svg>
+        </p>
+        <div class="pull-left" style="margin-left:20px">
+            <span data-sparkline
+                  data-spark-data="simpleChart2danger.sparkData"
+                  data-spark-options="simpleChart2danger.sparkOptions"
+                    ></span>
+        </div>
+  </div>
+    <div class="card">
+
+      <div class="circle">1</div>
+      <h1>View One</h1>
+     <span>
+       3.4 
+     </span>
+        <google-chart type='line' options='{"title": "Wind speed"}' data='[["Time", "Speed"], ["Tue Nov 15 2016 12:38:11", 4], ["Tue Nov 15 2016 12:40:11", 4.5], ["Tue Nov 15 2016 12:45:11", 4.9],["Tue Nov 15 2016 12:48:11", 4.7]
+  ]'>
+        </google-chart>
+        <template is="dom-repeat" items="{{_toArray(data)}}" as="note">
+        
+        <ul>
+          <li>
+            WindSpeed: {{note.value.speed}}
+          </li>
+          <li>
+            TimeStamp : {{_toDate(note.value.timestamp)}}
+          </li>
+        </ul>
+        <br>
+        </template>
+        <paper-datatable data="{{test}}">
+          <template>
+            <span>{{test}}</span>
+          </template>
+        </paper-datatable>
+
+    </div>
+
+
+
+
+  </template>
+
+
+  <script>
+    Polymer({
+      is: 'my-view1',
+      _toDate: function(time){
+        return new Date(time);
+      },
+      _toArray: function(obj) {
+            return Object.keys(obj).map(function(key) {
+                return {
+                    name: key,
+                    value: obj[key]
+                };
+            });
+        },
+
+       properties: {
+    uid: String,
+    test :{
+      value :[3,343,3]
+    },
+    data: {
+              
+
+      type: Object,
+        notify: true,
+      observer:
+        'userNameChanged'
+      ,
+      
+    }
+       },
+       userNameChanged: function(changeRecord,ds) {
+        console.log('path: ' + changeRecord);
+        console.log('value: ' + changeRecord);
+      },
+
+    });
+  </script>
+</dom-module>
