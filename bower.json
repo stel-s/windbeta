@@ -24,7 +24,8 @@
     "paper-listbox": "polymerelements/paper-listbox#^1.1.2",
     "paper-material": "PolymerElements/paper-material#^1.0.6",
     "vaadin-charts": "^3.2.0",
-    "paper-slider": "PolymerElements/paper-slider#^1.0.12"
+    "paper-slider": "PolymerElements/paper-slider#^1.0.12",
+    "paper-input": "PolymerElements/paper-input#^1.1.22"
   },
   "devDependencies": {
     "web-component-tester": "^4.0.0"

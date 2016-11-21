@@ -66,8 +66,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <firebase-document
     id="document"
     app-name = "notes"
-  path="/posts"
-  data="{{data}}" log >
+    path="/posts"
+    data="{{data}}" log >
+    </firebase-document>
+      <firebase-document
+    id="document"
+    app-name = "notes"
+    path="/last"
+    data ="{{last}}" log >
     </firebase-document>
 
     <style include="shared-styles">
@@ -85,7 +91,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                           transform-origin: 50% 50% 0;" src="//ssl.gstatic.com/m/images/weather/wind_unselected.svg"/>
     <span style="font-size: 30px;text-align: center" class="pull-right wi wi-beafort-{{beafort}} text-large" ></span> 
     <br>
-    <strong style="font-size:x-large">6&nbsp;<sup>Km/h</sup></strong>
+    <strong style="font-size:x-large"> {{last.speed}} &nbsp;<sup>Km/h</sup></strong>
     <br>min: 3
     <br>max: 6
     <svg xmlns="http://www.w3.org/2000/svg" height="24" style="position:absolute;width:20px;fill:cornflowerblue" viewBox="0 0 24 24">
@@ -94,7 +100,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     </svg>
     <br>
  <paper-slider pin value="20"></paper-slider>
-    Τελευταία Μέτρηση: Tue Nov 15 2016 14:37:56
+    Τελευταία Μέτρηση: {{getLastDate(last.timestamp)}}
    <br>
    
     Weekly change:4 
@@ -122,16 +128,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 
     <div class="card">
-
-     
-     <span>
+      <span>
        3.4 
-     </span>
-        <google-chart type='line' options='{"title": "Wind speed"}' data='[["Time", "Speed"], ["Tue Nov 15 2016 12:38:11", 4], ["Tue Nov 15 2016 12:40:11", 4.5], ["Tue Nov 15 2016 12:45:11", 4.9],["Tue Nov 15 2016 12:48:11", 4.7]
-  ]'>
-        </google-chart>
-        <template is="dom-repeat" items="{{_toArray(data)}}" as="note">
-        
+      </span>
+      <google-chart type='line' options='{"title": "Wind speed"}' data='[["Time", "Speed"], ["Tue Nov 15 2016 12:38:11", 4], ["Tue Nov 15 2016 12:40:11", 4.5], ["Tue Nov 15 2016 12:45:11", 4.9],["Tue Nov 15 2016 12:48:11", 4.7]]'>
+      </google-chart>
+      <template is="dom-repeat" items="{{_toArray(data)}}" as="note">
         <ul>
           <li>
             WindSpeed: {{note.value.speed}}
@@ -167,6 +169,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       toggleDialog: function() {
       this.$.dialog.toggle();
     },
+    getLast : function(obj){
+      return obj[Object.keys(obj)[0]].speed
+    },
+     getLastDate : function(obj){
+      return new Date(obj[Object.keys(obj)[0]].timestamp)
+    },
       _toArray: function(obj) {
             return Object.keys(obj).map(function(key) {
                 return {
@@ -175,26 +183,24 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                 };
             });
         },
-
        properties: {
-    uid: String,
-    sliderValue : {
-      type: Number,
-      notify : true
-    },
-    test :{
-      value :[3,343,3]
-    },
-    data: {
-              
-
-      type: Object,
-        notify: true,
-      observer:
-        'userNameChanged'
-      ,
-      
-    }
+          uid: String,
+          sliderValue : {
+            type: Number,
+            notify : true
+          },
+          test :{
+            value :[3,343,3]
+          },
+          data: {
+            type: Object,
+            notify: true,
+            observer: 'userNameChanged'
+          },
+          last : {
+            type:Object,
+            notify:true
+          }    
        },
        userNameChanged: function(changeRecord,ds) {
         console.log('path: ' + changeRecord);
