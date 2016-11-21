@@ -1,0 +1,11 @@
+[debug] ----------------------------------------------------------------------
+[debug] Command:      /home/ssp/.nvm/versions/node/v5.4.1/bin/node /home/ssp/.nvm/versions/node/v5.4.1/bin/firebase deploy
+[debug] CLI Version:  3.0.7
+[debug] Platform:     linux
+[debug] Node Version: v5.4.1
+[debug] Time:         Mon Nov 21 2016 23:35:30 GMT+0200 (EET)
+[debug] ----------------------------------------------------------------------
+[debug] 
+[debug] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase"]
+[debug] > refreshing access token with scopes: ["email","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","openid"]
+[debug] >>> HTTP REQUEST POST https://www.googleapis.com/oauth2/v3/token

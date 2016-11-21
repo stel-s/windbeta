@@ -13,7 +13,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../bower_components/paper-dialog/paper-dialog.html">
 <link rel="import" href="../bower_components/paper-button/paper-button.html">
 <link rel="import" href="../bower_components/paper-dialog-behavior/paper-dialog-behavior.html">
-<link rel="import" href="../bower_components/paper-dialog-behavior/paper-input.html">
+<link rel="import" href="../bower_components/paper-input/paper-input.html">
+<link rel="import" href="../bower_components/paper-input/paper-input.html">
+<link rel="import" href="../bower_components/iron-ajax/iron-ajax.html">
 <dom-module id="my-view2">
   <template>
     <style include="shared-styles">
@@ -25,13 +27,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     </style>
 
     <div class="card">
-      <fieldset>
+    
       
-          <paper-input label="Enter URI to POST event"></paper-input>
+          <paper-input id = "url" label="Enter URI for raspberry to  POST events"></paper-input>
       
         
-        <paper-button raised>Save</paper-button>
-      </fieldset>
+        <paper-button on-tap="handleTap" raised>Save</paper-button>
+    
         
       <!--<div class="circle">2</div>
       <h1>View Two</h1>
@@ -50,6 +52,17 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       </paper-dialog>-->
     </div>
       
+<iron-ajax
+        id="AjaxPost"
+        url="http://localhost:3000/setURL"
+        method="POST"
+        content-type="application/json"
+        handle-as="json"
+        on-response="_handleAjaxPostResponse"
+        on-error="_handleAjaxPostError"
+        ></iron-ajax>
+<iron-request id="xhr"></iron-request>
+
 
     
   </template>
@@ -59,6 +72,16 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       is: 'my-view2',
       toggleDialog : function (){
         this.$.dialog.open();
+      },
+      handleTap : function () {
+        console.log(this.$.url.value)
+       //this.$.xhr.send( { url: "http://localhost:3000/setURL", body: { url : this.$.url.value},method:"POST"});
+
+       this.$.AjaxPost.body = { "url": this.$.url.value, "password": "password" };
+       this.$.AjaxPost.generateRequest();
+      },
+      _handleAjaxPostResponse : function ( ) {
+        
       }
     });
   </script>
