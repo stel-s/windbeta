@@ -12,13 +12,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="shared-styles.html">
 <link rel="import" href="../bower_components/polymerfire/polymerfire.html">
 <link rel="import" href="../bower_components/google-chart/google-chart.html">
-<link rel="import" href="../bower_components/paper-datatable/paper-datatable.html">
+
 <link rel="import" href="../bower_components/paper-listbox/paper-listbox.html">
 <link rel="import" href="../bower_components/paper-material/paper-material.html">
 <link rel="import" href="../bower_components/vaadin-charts/vaadin-charts.html">
-<link rel="import" href="../bower_components/weather-icons/css/weather-icons.css">
-<link rel="import" href="../bower_components/weather-icons/css/weather-icons-wind.css">
-
+<link rel="import" href="../bower_components/paper-dialog/paper-dialog.html">
+<link rel="import" href="../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../bower_components/paper-slider/paper-slider.html">
 <dom-module id="my-view1">
  
   <template>
@@ -77,43 +77,53 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       }
     </style>
 <div class="card">
+  
     <img src="wind.png" style="height:48px;width:auto"/>
-        <img class="center" style="webkit-transform-origin: 50% 50%;
-  -webkit-transform: rotate({{rotate}}deg);position:relative;
-  width: 36px;transform: rotate({{rotate}}deg);
-                transform-origin: 50% 50% 0;" src="//ssl.gstatic.com/m/images/weather/wind_unselected.svg"/>
-        <span style="font-size: 30px;text-align: center" class="pull-right wi wi-beafort-{{beafort}} text-large" ></span>{{sensor.vane}}
-        <br>
-        <strong style="font-size:x-large">6&nbsp;<sup>Km/h</sup></strong>
-
-            <br>min:3
-            <br>max:6
-            <svg
-                    xmlns="http://www.w3.org/2000/svg" height="24"
-                    style="position:absolute;width:20px;fill:cornflowerblue" viewBox="0 0 24 24">
-                <path d="M7 14l5-5 5 5z"/>
-                <path d="M0 0h24v24h-24z" fill="none"/>
-            </svg>
-            <br>
-            Τελευταία Μέτρηση: Tue Nov 15 2016 14:37:56
-
-            <br>
-            Weekly change:4<svg xmlns="http://www.w3.org/2000/svg" height="24" style="position:absolute;width:20px;fill:cornflowerblue" viewBox="0 0 24 24">
-                <path d="M7 14l5-5 5 5z"/>
-                <path d="M0 0h24v24h-24z" fill="none"/>
-            </svg>
-        </p>
-        <div class="pull-left" style="margin-left:20px">
-            <span data-sparkline
-                  data-spark-data="simpleChart2danger.sparkData"
-                  data-spark-options="simpleChart2danger.sparkOptions"
-                    ></span>
-        </div>
+    <img class="center" style="webkit-transform-origin: 50% 50%;
+            -webkit-transform: rotate({{rotate}}deg);position:relative;
+            width: 36px;transform: rotate({{rotate}}deg);
+                          transform-origin: 50% 50% 0;" src="//ssl.gstatic.com/m/images/weather/wind_unselected.svg"/>
+    <span style="font-size: 30px;text-align: center" class="pull-right wi wi-beafort-{{beafort}} text-large" ></span> 
+    <br>
+    <strong style="font-size:x-large">6&nbsp;<sup>Km/h</sup></strong>
+    <br>min: 3
+    <br>max: 6
+    <svg xmlns="http://www.w3.org/2000/svg" height="24" style="position:absolute;width:20px;fill:cornflowerblue" viewBox="0 0 24 24">
+        <path d="M7 14l5-5 5 5z"/>
+        <path d="M0 0h24v24h-24z" fill="none"/>
+    </svg>
+    <br>
+ <paper-slider pin value="20"></paper-slider>
+    Τελευταία Μέτρηση: Tue Nov 15 2016 14:37:56
+   <br>
+   
+    Weekly change:4 
+    <svg xmlns="http://www.w3.org/2000/svg" height="24" style="position:absolute;width:20px;fill:cornflowerblue" viewBox="0 0 24 24">
+        <path d="M7 14l5-5 5 5z"/>
+        <path d="M0 0h24v24h-24z" fill="none"/>
+    </svg>
+   
+      
+    
+    <div class="pull-left" style="margin-left:20px">
+          <!--<span data-sparkline-->
+          <!--      data-spark-data="simpleChart2danger.sparkData"-->
+          <!--      data-spark-options="simpleChart2danger.sparkOptions"-->
+          <!--        ></span>-->
+      </div>
+    
+      <paper-dialog id="dialog">
+        <h2>Dialog Title</h2>
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute
+          irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+     </paper-dialog>
   </div>
+
+
+
     <div class="card">
 
-      <div class="circle">1</div>
-      <h1>View One</h1>
+     
      <span>
        3.4 
      </span>
@@ -132,16 +142,18 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         </ul>
         <br>
         </template>
-        <paper-datatable data="{{test}}">
-          <template>
-            <span>{{test}}</span>
-          </template>
-        </paper-datatable>
+      
 
     </div>
 
 
-
+ <template>
+    <paper-button raised id="toggleDialog"></paper-button>
+    <paper-dialog  onclick="{{toggleDialog}}">
+      <h2>Header</h2>
+      <div>Dialog body</div>
+    </paper-dialog> 
+ </template>
 
   </template>
 
@@ -152,6 +164,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       _toDate: function(time){
         return new Date(time);
       },
+      toggleDialog: function() {
+      this.$.dialog.toggle();
+    },
       _toArray: function(obj) {
             return Object.keys(obj).map(function(key) {
                 return {
@@ -163,6 +178,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
        properties: {
     uid: String,
+    sliderValue : {
+      type: Number,
+      notify : true
+    },
     test :{
       value :[3,343,3]
     },
@@ -181,7 +200,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         console.log('path: ' + changeRecord);
         console.log('value: ' + changeRecord);
       },
+  //     ready: function() {
+  //   this.$.dialog.toggle();
+  // }
+
+    
 
     });
   </script>
 </dom-module>
+
+

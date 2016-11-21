@@ -23,7 +23,8 @@
     "paper-card": "PolymerElements/paper-card#^1.1.4",
     "paper-listbox": "polymerelements/paper-listbox#^1.1.2",
     "paper-material": "PolymerElements/paper-material#^1.0.6",
-    "vaadin-charts": "^3.2.0"
+    "vaadin-charts": "^3.2.0",
+    "paper-slider": "PolymerElements/paper-slider#^1.0.12"
   },
   "devDependencies": {
     "web-component-tester": "^4.0.0"
