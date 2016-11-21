@@ -13,8 +13,7 @@ Fire.init = function(){
     
   firebase.initializeApp(config);  
   var database = firebase.database();
-  console.log(database);
-  var starCountRef = firebase.database().ref('posts');
+   var starCountRef = firebase.database().ref('posts');
   function writeNewPost(uid, username, picture, title, body) {
     // A post entry.
     var postData = {
@@ -37,13 +36,16 @@ Fire.init = function(){
     return firebase.database().ref().update(updates);
   }
   // writeNewPost(3,"34#","434","3434","434'");
-  var newPostRef = starCountRef.push();
+ 
+ 
+Fire.save = function (param) {
+   var newPostRef = starCountRef.push();
   newPostRef.set({
     id:343,
-    speed:454.4554,
+    speed:param,
     timestamp: new Date().getTime()
   });
-
+}
 
 } 
 module.exports = Fire;
