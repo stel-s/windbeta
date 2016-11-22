@@ -100,7 +100,13 @@ app.post('/begin',function(req,res){
   res.json({ message: 'hooray! fsdswelcome to our api!' });
 });
 
-
+app.post('/pull',function(req,res){
+ var sys = require('sys')
+ var exec = require('child_process').exec;
+ function puts(error, stdout, stderr) { sys.puts(stdout) }
+  exec("git pull && sudo /home/pi/.nvm/versions/node/v7.1.0/bin/node wind.js ", puts);
+  res.json({ message: 'hooray! fsdswelcome to our api!' });
+});
 
 io.on('connection', function(socket){
   console.log('a user connected');
